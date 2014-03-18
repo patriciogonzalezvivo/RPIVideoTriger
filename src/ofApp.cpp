@@ -3,10 +3,19 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetLogLevel(OF_LOG_VERBOSE);
-	ofSetVerticalSync(false);
+	ofSetVerticalSync(true);
+    
+    //  BCM
+    //
+    int pinMax = 7;
+    int pinMap[7] = {4,17,18,22,23,24,25};
     
 #ifdef TARGET_OPENGLES
     consoleListener.setup(this);
+    if(wiringPiSetupSys() == -1){
+        printf("Error on wiringPi setup\n");
+        return false;
+    }
 #endif
 	
 	//this will let us just grab a video without recompiling
@@ -18,7 +27,17 @@ void ofApp::setup(){
 		
 		for (int i=0; i<files.size(); i++) {
             
+            if(i>=pinMax)
+                break;
+            
+            Channel newChannel;
+            newChannel.pin = pinMap[i];
 #ifdef TARGET_OPENGLES
+
+            //  Pins
+            pinMode(newChannel.pin, INPUT);
+            
+            //  Video Player
 			ofxOMXPlayerSettings settings;
 			settings.videoPath = files[i].path();
 			settings.useHDMIForAudio = true;	//default true
@@ -31,8 +50,9 @@ void ofApp::setup(){
             ofVideoPlayer *player = new ofVideoPlayer();
             player->loadMovie(files[i].path());
 #endif
-			players.push_back(player);
-            states.push_back(false);
+            newChannel.video = player;
+            newChannel.state = false;
+			channels.push_back(newChannel);
 		}
 	}
     
@@ -45,9 +65,9 @@ void ofApp::update(){
     
     int nChange = -1;
     
-    for (int i = 0; i < states.size(); i++) {
-        if((i==nKeyPressed)&&(!states[i])){
-            states[i] = true;
+    for (int i = 0; i < channels.size(); i++) {
+        if((i==nKeyPressed)&&(!channels[i].state)){
+            channels[i].state = true;
             nChange = i;
             nActive = i;
             nKeyPressed = -1;
@@ -56,19 +76,18 @@ void ofApp::update(){
     }
     
     if(nChange!= -1){
-        cout << "Something change" << endl;
-        for (int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < channels.size(); i++) {
             if (i==nChange) {
-                states[i] = true;
+                channels[i].state = true;
 #ifndef TARGET_OPENGLES
-                players[i]->setPosition(0);
-                players[i]->play();
+                channels[i].video->setPosition(0);
+                channels[i].video->play();
 #endif
             }else{
-                states[i] = false;
+                channels[i].state = false;
 #ifndef TARGET_OPENGLES
-                players[i]->stop();
-                players[i]->setPosition(0);
+                channels[i].video->stop();
+                channels[i].video->setPosition(0);
 #endif
             }
             
@@ -76,32 +95,35 @@ void ofApp::update(){
             players[i]->setPaused(!states[i]);
 #endif
         }
+        
+        cout << "Change to channel " << nChange << endl;
+        for (int i = 0; i < channels.size(); i++) {
+            cout << " " << channels[i].pin << ":" << channels[i].state;
+        }
+        cout << endl;
+
     }
     
     
 	if(nActive!=-1){
-        players[nActive]->update();
+        channels[nActive].video->update();
     }
-    
-//    cout << "Change: " << nChange << endl;
-//    cout << "Active: " << nActive << endl;
-//    for (int i = 0; i < states.size(); i++) {
-//        cout << " " << i << ":" << states[i];
-//    }
-//    cout << endl;
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0);
-    
     ofPushMatrix();
     ofTranslate(ofGetWidth()*0.5,ofGetHeight()*0.5);
 	if(nActive!=-1){
-        players[nActive]->draw(0,0,players[nActive]->getWidth()*-0.5,players[nActive]->getHeight()*-0.5);
+        channels[nActive].video->draw(0,0,
+                                      channels[nActive].video->getWidth()*-0.5,
+                                      channels[nActive].video->getHeight()*-0.5);
     }
     ofPopMatrix();
+    
+    ofDrawBitmapString(ofToString(ofGetFrameRate())+"fps", 15,15);
 }
 
 //--------------------------------------------------------------
@@ -119,11 +141,8 @@ void ofApp::onCharacterReceived(SSHKeyListenerEventData& e){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    cout << "Key press " << key << endl;
-    
     if(key > 47 ){
         nKeyPressed = key-48;
-        cout << "Register " << nKeyPressed << endl;
     }
 }
 

@@ -2,10 +2,19 @@
 
 #include "ofMain.h"
 
+struct Channel{
+#ifdef TARGET_OPENGLES
+    ofxOMXPlayer *  video;
+#else
+    ofVideoPlayer*  video;
+#endif
+    int             pin;
+    bool            state;
+};
+
 #ifdef TARGET_OPENGLES
 #include "ofAppEGLWindow.h"
-#include "ConsoleListener.h"
-
+#include "wiringPi.h"
 #include "ofxOMXPlayer.h"
 #include "ConsoleListener.h"
 
@@ -34,13 +43,9 @@ public:
 #ifdef TARGET_OPENGLES
     void onCharacterReceived(SSHKeyListenerEventData& e);
 	ConsoleListener consoleListener;
-	
-    vector<ofxOMXPlayer*> players;
-#else
-    vector<ofVideoPlayer*> players;
 #endif
 
-    vector<bool>    states;
+    vector<Channel> channels;
     
     int nActive;
     int nKeyPressed;

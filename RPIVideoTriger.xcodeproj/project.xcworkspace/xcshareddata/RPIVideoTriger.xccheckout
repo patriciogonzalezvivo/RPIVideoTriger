@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9EC34480-0844-4C46-B5C0-5B96B4E5BDC0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RPIVideoTriger</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>603D20F1-E441-45A0-9E43-D20B4F8C9608</key>
+		<string>ssh://github.com/patriciogonzalezvivo/RPIVideoTriger.git</string>
+		<key>CC65AC84-C276-4AB6-B411-2EB8B24E5198</key>
+		<string>ssh://github.com/openframeworks/openFrameworks.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>apps/myApps/RPIVideoTriger/RPIVideoTriger.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>603D20F1-E441-45A0-9E43-D20B4F8C9608</key>
+		<string>../..</string>
+		<key>CC65AC84-C276-4AB6-B411-2EB8B24E5198</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/patriciogonzalezvivo/RPIVideoTriger.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CC65AC84-C276-4AB6-B411-2EB8B24E5198</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CC65AC84-C276-4AB6-B411-2EB8B24E5198</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openFrameworks</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>603D20F1-E441-45A0-9E43-D20B4F8C9608</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RPIVideoTriger</string>
+		</dict>
+	</array>
+</dict>
+</plist>
