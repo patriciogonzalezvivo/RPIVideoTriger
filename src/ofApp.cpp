@@ -92,7 +92,7 @@ void ofApp::update(){
             }
             
 #ifdef TARGET_OPENGLES
-            players[i]->setPaused(!states[i]);
+            players[i]->setPaused(!channels[i].state);
 #endif
         }
         
