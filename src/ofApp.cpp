@@ -14,7 +14,7 @@ void ofApp::setup(){
     consoleListener.setup(this);
     if(wiringPiSetupSys() == -1){
         printf("Error on wiringPi setup\n");
-        return false;
+        return;
     }
 #endif
 	
