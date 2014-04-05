@@ -2,6 +2,13 @@
 
 #include "ofMain.h"
 
+#ifdef TARGET_OPENGLES
+#include "ofAppEGLWindow.h"
+#include "wiringPi.h"
+#include "ofxOMXPlayer.h"
+#include "ConsoleListener.h"
+#endif
+
 struct Channel{
 #ifdef TARGET_OPENGLES
     ofxOMXPlayer *  video;
@@ -13,11 +20,6 @@ struct Channel{
 };
 
 #ifdef TARGET_OPENGLES
-#include "ofAppEGLWindow.h"
-#include "wiringPi.h"
-#include "ofxOMXPlayer.h"
-#include "ConsoleListener.h"
-
 class ofApp : public ofBaseApp, public SSHKeyListener{
 #else
 class ofApp : public ofBaseApp{
