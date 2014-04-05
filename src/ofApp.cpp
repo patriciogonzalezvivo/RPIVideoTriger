@@ -92,7 +92,7 @@ void ofApp::update(){
             }
             
 #ifdef TARGET_OPENGLES
-            channels[i]->video->setPaused(!channels[i].state);
+            channels[i].video->setPaused(!channels[i].state);
 #endif
         }
         
