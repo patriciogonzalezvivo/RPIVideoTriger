@@ -7,8 +7,8 @@ void ofApp::setup(){
     
     //  BCM
     //
-    int pinMax = 7;
-    int pinMap[7] = {4,17,18,22,23,24,25};
+    int pinMax = 4;
+    int pinMap[4] = {18,27,22,23};
     
 #ifdef TARGET_OPENGLES
     consoleListener.setup(this);
@@ -92,7 +92,7 @@ void ofApp::update(){
             }
             
 #ifdef TARGET_OPENGLES
-            channels[i]->video->->setPaused(!channels[i].state);
+            channels[i]->video->setPaused(!channels[i].state);
 #endif
         }
         
@@ -106,7 +106,9 @@ void ofApp::update(){
     
     
 	if(nActive!=-1){
+#ifndef TARGET_OPENGLES
         channels[nActive].video->update();
+#endif
     }
 }
 
